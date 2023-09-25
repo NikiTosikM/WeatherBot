@@ -3,6 +3,7 @@ from aiogram import Bot, types, Dispatcher, executor
 import tracemalloc
 from main_dates import TOKEN_BOT , API_WEATHER
 from GetWeather import get_weather
+from Keyboard import keyboard_buttons
 
 
 bot = Bot(token=TOKEN_BOT) 
@@ -16,7 +17,9 @@ async def start_bot (message: types.Message):
 async def weather_city(message: types.Message):
     dates, check = get_weather(message.text, API_WEATHER)
 
-    await message.answer(dates)
+    keyboard = keyboard_buttons(message.text, check)
+
+    await message.answer(dates, reply_markup= keyboard )
 
 if __name__ == '__main__':
     tracemalloc.start()
